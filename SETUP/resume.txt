@@ -1,0 +1,83 @@
+JUSTIN D. TURNER
+
+Tampa, Florida | (813) 312-3929 | Jdturner412@gmail.com
+
+SUMMARY
+Finance and risk management leader with 15+ years at McKinsey &amp; Company, most recently leading and scaling
+a governed generative-AI agent from pilot to firmwide adoption across 20,000+ users. Skilled at moving
+emerging technology from early rollout to enterprise-wide trust and adoption, translating complex policy into
+practical guidance for senior stakeholders. Background spans enterprise risk, insider risk, cyber and data risk,
+and financial analytics leadership within global professional services firms.
+EXPERIENCE
+McKinsey &amp; Company Tampa, FL August 2011 – September 2026
+Client Service Risk Manager, Technology Change Management January 2025 – September 2026
+• Led change management for the Firm&#39;s Technology Risk enablement strategy, partnering with senior
+stakeholders to drive adoption of new tools and ways of working while minimizing disruption to frontline client
+service teams.
+• Owned and led the Firm Risk Navigator, a governed generative-AI agent giving client service teams on-demand
+access to risk guidance; serving 20,000+ users and cutting time-to-answer by 30%.
+• Drove the pilot-to-firmwide rollout of an AI tool risk notification model, partnering with senior stakeholders to
+advance governance from pilot to production, now adopted across risk advisors and project managers.
+• Co-led the Risk mentorship program (205 mentors, 195 mentees), strengthening the cross-functional network.
+Manager, Insider Risk December 2022 – December 2024
+• Designed and matured a firm-wide Insider Risk program protecting intellectual property and sensitive client
+data, moving the organization from reactive investigations to a proactive, analytics-driven model spanning policy,
+monitoring, and consequence management.
+• Deployed a multi-tool detection stack (DLP, UBA, SIEM) to monitor data exfiltration and risky behavior across
+cloud and endpoint channels, and built automation to triage insider-threat activity that reduced manual reviews
+by 40%.
+• Led 1,200 complex, confidential insider-risk investigations to closure through proactive detection, analysis, and
+interviewing.
+• Set firmwide policies and standardized escalation paths, consequence management, and executive reporting with
+legal, security, HR, and technology partners, aligning insider-risk priorities to the most protected assets.
+Manager, Cyber &amp; Data Risk August 2021 – December 2022
+• Led end-to-end cyber and data risk assessments for high-impact initiatives, translating complex findings into
+remediation plans that measurably reduced exposure across key business units.
+• Partnered with technology, legal, and business leaders to design and implement control frameworks for data
+protection, access management, and monitoring, strengthening cyber hygiene and compliance.
+• Built and ran a firm-wide phishing simulation program, reducing click-through rates and improving reporting
+rates through targeted campaigns and coaching.
+• Concurrently served as Chief of Staff to the Cyber and Data leader, driving strategic priorities, managing cross-
+functional initiatives, and coordinating leadership decision making across the practice.
+Manager, Enterprise Risk Management August 2019 – August 2021
+• Led the annual ~$400M budget and headcount process for the collective risk and legal functions, owning key
+operational-metric reporting as liaison to Firm Finance.
+• Developed a risk identification framework and dashboard for the Chief Risk Officer, unifying legal, internal audit,
+and compliance findings into a single executive view that drove committee-level risk strategy and action plans.
+Finance Analytical Lead January 2018 – August 2019
+• Delivered financial performance insights on a ~$500M annual budget to global senior management and
+developed risk assessment methodologies to identify high-risk transactions and support compliance oversight.
+• Managed a global team of 11 financial analysts across the Czech Republic, Poland, India, and Germany,
+overseeing financial reviews to ensure compliance with audit procedures, firm policy, and IRS regulations for
+accounts payable, travel, and entertainment expenses.
+
+• Led business process automation initiatives using SQL and Tableau, including the successful rollout of global
+allocations, improving the efficiency and consistency of financial review processes.
+Senior Reporting &amp; Business Analyst August 2014 – January 2018
+• Implemented a financial reporting process that cut revenue reversals by 9% across Latin American offices while
+improving accuracy and timeliness.
+• Led multiple Latin American offices through the transition to U.S. reporting policies, standardizing WIP, A/R,
+forecasting, and compliance reporting.
+Reporting &amp; Business Analyst August 2011 – August 2014
+• Engineered integrated, macro-driven revenue and expense models automating annual reporting and producing
+consistently accurate, on-time month-end closing for leadership.
+• Established data-quality standards, rolled them out across the team, and built ad-hoc reports that provided
+clearer visibility into profitability.
+PwC (PricewaterhouseCoopers) Tampa, FL August 2006 – August 2011
+Specialized Accounting Analyst December 2008 – August 2011
+• Provided financial analysis, cost management, and quarterly reporting for a $120M Global Mobility budget,
+coordinating with line-of-service Finance leadership through the annual budget cycle.
+• Supported PwC&#39;s initiative to expand services globally, managing cost allocation, reporting, and invoicing.
+Time and Expense Regulator Auditor August 2006 – December 2008
+• Audited staff and partner expenses against firm policy and served as subject-matter expert testing the internal
+audit tool.
+
+EDUCATION
+The University of Tampa | Tampa, FL | Bachelor of Science in Finance, 2011
+
+TECHNICAL SKILLS
+Risk &amp; AI Governance: Governed AI and generative-AI tooling (e.g., Microsoft Copilot Studio, OpenAI), risk
+investigation, phishing simulations, and monitoring
+Financial Modeling: Forecasting, budgeting, WIP, A/R
+Applications: Tableau, Cognos ReportNet, Oracle, SAP, PeopleNet, Comperio, SIRVA
+Development: VBA, SQL
