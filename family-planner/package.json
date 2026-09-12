@@ -3,11 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Wall-mounted family digital planner (calendar, chores, meals, photos) — local-first PWA.",
+  "description": "Wall-mounted family digital planner (calendar, chores, meals, photos) \u2014 local-first PWA.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "serve": "vite build && vite preview --host --port 4173",
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {

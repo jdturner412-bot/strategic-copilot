@@ -36,6 +36,33 @@ variable keeps everything relative, which is what `npm run preview` wants.
 set **Source** to **GitHub Actions**. Until that is switched, the build step
 succeeds and the deploy step fails.
 
+### Serving it from a computer at home
+
+No GitHub account and no hosting required — useful if Pages is not set up, or
+if you would rather nothing about the household is on the public internet.
+
+On a computer on the same Wi-Fi as the iPad, with [Node.js](https://nodejs.org)
+installed:
+
+```bash
+cd family-planner
+npm install
+npm run serve
+```
+
+That builds the app and serves it to the whole local network. It prints two
+addresses; the **Network** one (something like `http://192.168.1.24:4173/`) is
+what the iPad opens.
+
+Two consequences of serving over plain HTTP on a LAN:
+
+- **Home Screen and full-screen mode still work.** iOS honours the app's
+  `apple-mobile-web-app-capable` hint over HTTP.
+- **Offline does not.** Safari only registers a service worker on a secure
+  origin, so the iPad needs that computer awake and on the network. Close the
+  terminal or let the machine sleep and the wall display goes blank. That is
+  the trade for skipping hosting; GitHub Pages above does not have it.
+
 ### Putting it on the iPad
 
 1. Open the site URL in **Safari** on the iPad. (It has to be Safari — Chrome
