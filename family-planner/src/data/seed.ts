@@ -2,6 +2,7 @@ import { db } from './db'
 import { newId, stamp } from './repository'
 import type { CalendarEvent, FamilyMember, MealSlot, Recipe, TodoItem, TodoList } from './types'
 import { addDays, toDateKey } from '@/lib/dates'
+import { firstDueDate } from '@/lib/recurrence'
 
 /**
  * First-run content. A wall display that boots to an empty screen looks broken,
@@ -71,25 +72,25 @@ export async function seed(): Promise<void> {
     { id: newId(), name: 'Errands', icon: '🚗', sortOrder: 2, ...base },
   ]
   const [chores, shopping, errands] = lists
-  const today = toDateKey(new Date())
+  const due = (rule: string) => toDateKey(firstDueDate(rule))
 
   const items: TodoItem[] = [
     {
       id: newId(), listId: chores.id, title: 'Make your bed', assignedMemberId: riley.id,
-      done: false, recurrenceRule: 'FREQ=DAILY', dueDate: today, points: 5, sortOrder: 0, ...base,
+      done: false, recurrenceRule: 'FREQ=DAILY', dueDate: due('FREQ=DAILY'), points: 5, sortOrder: 0, ...base,
     },
     {
       id: newId(), listId: chores.id, title: 'Feed the dog', assignedMemberId: jules.id,
-      done: false, recurrenceRule: 'FREQ=DAILY', dueDate: today, points: 5, sortOrder: 1, ...base,
+      done: false, recurrenceRule: 'FREQ=DAILY', dueDate: due('FREQ=DAILY'), points: 5, sortOrder: 1, ...base,
     },
     {
       id: newId(), listId: chores.id, title: 'Take out recycling', assignedMemberId: riley.id,
-      done: false, recurrenceRule: 'FREQ=WEEKLY;BYDAY=SU', dueDate: today, points: 10,
+      done: false, recurrenceRule: 'FREQ=WEEKLY;BYDAY=SU', dueDate: due('FREQ=WEEKLY;BYDAY=SU'), points: 10,
       sortOrder: 2, ...base,
     },
     {
       id: newId(), listId: chores.id, title: 'Vacuum the living room', assignedMemberId: jules.id,
-      done: false, recurrenceRule: 'FREQ=WEEKLY;BYDAY=SA', dueDate: today, points: 15,
+      done: false, recurrenceRule: 'FREQ=WEEKLY;BYDAY=SA', dueDate: due('FREQ=WEEKLY;BYDAY=SA'), points: 15,
       sortOrder: 3, ...base,
     },
     {

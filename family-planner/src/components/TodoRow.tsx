@@ -3,7 +3,7 @@ import type { FamilyMember, TodoItem } from '@/data/types'
 import { repo } from '@/data'
 import { Avatar } from './Avatar'
 import { CheckIcon, RepeatIcon, StarIcon } from './Icons'
-import { memberColor, tint } from '@/lib/colors'
+import { memberColor, readableInk, tint } from '@/lib/colors'
 import { cn } from '@/lib/cn'
 
 interface TodoRowProps {
@@ -58,7 +58,7 @@ export function TodoRow({ item, member, onEdit, showPoints = true, density = 'fu
       {showPoints && item.points > 0 && (
         <span
           className="inline-flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-base font-bold"
-          style={{ backgroundColor: tint(member?.color, 0.18), color }}
+          style={{ backgroundColor: tint(member?.color, 0.18), color: readableInk(member?.color) }}
         >
           <StarIcon className="h-4 w-4" />
           {item.points}

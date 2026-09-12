@@ -38,6 +38,16 @@ export function tint(name: string | undefined, alpha: number): string {
   return `rgb(${memberColor(name).rgb} / ${alpha})`
 }
 
+/**
+ * A member colour mixed toward the current theme's text colour, for use as
+ * *text* on a tinted background. Straight `hex` is a pastel that reads fine on
+ * a dark panel but washes out on a light one; mixing with `--app-ink` darkens
+ * it in the light theme and lightens it in the dark theme automatically.
+ */
+export function readableInk(name: string | undefined, strength = 0.68): string {
+  return `color-mix(in srgb, ${memberColor(name).hex} ${Math.round(strength * 100)}%, var(--app-ink))`
+}
+
 /** The next unused colour, so a new family member never duplicates a sibling. */
 export function nextAvailableColor(taken: string[]): MemberColorName {
   const free = MEMBER_COLOR_LIST.find((color) => !taken.includes(color.name))

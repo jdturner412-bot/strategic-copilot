@@ -1,5 +1,5 @@
 import type { FamilyMember } from '@/data/types'
-import { initials, memberColor, tint } from '@/lib/colors'
+import { initials, memberColor, readableInk, tint } from '@/lib/colors'
 import { cn } from '@/lib/cn'
 
 const SIZES = {
@@ -27,7 +27,7 @@ export function Avatar({ member, size = 'md', className }: AvatarProps) {
       )}
       style={{
         backgroundColor: member.avatarUrl ? 'transparent' : tint(member.color, 0.25),
-        color: color.hex,
+        color: readableInk(member.color),
         boxShadow: `inset 0 0 0 2px ${color.hex}`,
       }}
       title={member.name}

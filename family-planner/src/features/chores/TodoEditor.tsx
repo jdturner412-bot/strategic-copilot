@@ -5,8 +5,8 @@ import { MemberPicker } from '@/components/MemberPicker'
 import { Field } from '@/features/calendar/EventEditor'
 import { repo, useMembers, useSettings } from '@/data'
 import type { TodoItem } from '@/data/types'
-import { todayKey } from '@/lib/dates'
-import { RECURRENCE_PRESETS } from '@/lib/recurrence'
+import { toDateKey } from '@/lib/dates'
+import { firstDueDate, RECURRENCE_PRESETS } from '@/lib/recurrence'
 import { cn } from '@/lib/cn'
 
 export interface TodoDraft {
@@ -43,7 +43,9 @@ export function TodoEditor({ draft, onClose }: { draft: TodoDraft | null; onClos
       assignedMemberId: assignee[0],
       recurrenceRule: recurrence || undefined,
       // A repeating chore needs a due date to roll forward from; a one-off does not.
-      dueDate: recurrence ? (draft.item?.dueDate ?? todayKey()) : undefined,
+      dueDate: recurrence
+        ? (draft.item?.dueDate ?? toDateKey(firstDueDate(recurrence)))
+        : undefined,
       points,
     }
     if (draft.item) {

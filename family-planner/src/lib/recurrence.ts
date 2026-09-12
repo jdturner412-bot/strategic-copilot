@@ -110,3 +110,14 @@ export function occursOn(rule: string, dtstart: Date, date: Date): boolean {
 export function isExcluded(exceptionDates: DateKey[] | undefined, date: Date): boolean {
   return exceptionDates?.includes(toDateKey(date)) ?? false
 }
+
+/**
+ * The first day a newly created repeating item is actually due. A chore set to
+ * repeat on Sundays should not sit on Saturday's list just because that is
+ * when it was added.
+ */
+export function firstDueDate(rule: string, from = new Date()): Date {
+  const start = new Date(from)
+  start.setHours(0, 0, 0, 0)
+  return nextOccurrence(rule, start, start) ?? start
+}
