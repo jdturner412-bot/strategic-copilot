@@ -57,7 +57,7 @@ export function SettingsView() {
   }
 
   return (
-    <div className="no-scrollbar h-full overflow-y-auto px-8 pt-5 pb-8">
+    <div className="no-scrollbar h-full overflow-y-auto px-4 pt-5 pb-8 lg:px-8">
       <header className="mb-5">
         <h1 className="text-4xl font-black tracking-tight">Settings</h1>
         <p className="mt-1 text-lg text-muted">
@@ -65,7 +65,7 @@ export function SettingsView() {
         </p>
       </header>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Section title="Household">
           <Row label="Family name">
             <input
@@ -218,7 +218,7 @@ export function SettingsView() {
               No photos yet. Add a few and they'll play while the planner is idle.
             </p>
           ) : (
-            <div className="grid grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
               {photos.map((photo) => (
                 <PhotoTile key={photo.id} blob={photo.blob} onRemove={() => void repo.photos.remove(photo.id)} />
               ))}

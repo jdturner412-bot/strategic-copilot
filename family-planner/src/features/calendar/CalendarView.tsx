@@ -58,7 +58,7 @@ export function CalendarView() {
   }
 
   return (
-    <div className="flex h-full flex-col gap-3 px-8 pt-5 pb-6">
+    <div className="flex h-full flex-col gap-3 px-4 pt-5 pb-6 lg:px-8">
       <header className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <IconButton label="Previous" onClick={() => step(-1)}>

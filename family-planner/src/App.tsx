@@ -17,6 +17,7 @@ export default function App() {
   const settings = useSettings()
   const [view, setView] = useState<ViewId>('today')
   const [ready, setReady] = useState(false)
+  const [startupError, setStartupError] = useState<string | null>(null)
 
   useTheme(settings)
 
@@ -24,10 +25,19 @@ export default function App() {
     // Seed a first-run household, then re-open any recurring chores whose day
     // has rolled over since the display was last touched.
     void (async () => {
-      await repo.getSettings()
-      await seedIfEmpty()
-      await repo.rolloverRecurringTodos()
-      setReady(true)
+      try {
+        await repo.getSettings()
+        await seedIfEmpty()
+        await repo.rolloverRecurringTodos()
+        setReady(true)
+      } catch (error) {
+        // Private browsing and blocked site data both make IndexedDB throw.
+        // Say so, rather than sitting on the loading screen forever.
+        console.error('Could not open the planner database.', error)
+        setStartupError(
+          error instanceof Error ? error.message : 'Could not open local storage.',
+        )
+      }
     })()
   }, [])
 
@@ -48,6 +58,22 @@ export default function App() {
   useEffect(() => {
     if (!settings.rewardsEnabled && view === 'rewards') setView('today')
   }, [settings.rewardsEnabled, view])
+
+  if (startupError) {
+    return (
+      <div className="flex h-full items-center justify-center bg-bg p-10 text-center">
+        <div className="max-w-xl space-y-3">
+          <h1 className="text-3xl font-black">The planner can't reach its storage</h1>
+          <p className="text-xl text-muted">
+            This browser is blocking local storage, so there is nowhere to keep your
+            calendar. Private browsing is the usual cause — try a normal window, or
+            allow site data for this page.
+          </p>
+          <p className="text-base text-muted">{startupError}</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!ready) {
     return (

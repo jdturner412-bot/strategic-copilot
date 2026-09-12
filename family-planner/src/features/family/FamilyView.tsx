@@ -20,7 +20,7 @@ export function FamilyView() {
   const [editing, setEditing] = useState<FamilyMember | 'new' | null>(null)
 
   return (
-    <div className="flex h-full flex-col gap-5 px-8 pt-5 pb-6">
+    <div className="flex h-full flex-col gap-5 px-4 pt-5 pb-6 lg:px-8">
       <header className="flex items-center gap-4">
         <div className="flex-1">
           <h1 className="text-4xl font-black tracking-tight">Family</h1>
@@ -38,7 +38,7 @@ export function FamilyView() {
         </Button>
       </header>
 
-      <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-4 content-start gap-5 overflow-y-auto">
+      <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-2 content-start gap-5 overflow-y-auto md:grid-cols-3 xl:grid-cols-4">
         {members.map((member) => {
           const color = memberColor(member.color)
           const earned = points

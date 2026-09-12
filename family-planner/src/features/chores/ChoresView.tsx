@@ -64,7 +64,7 @@ export function ChoresView() {
   }
 
   return (
-    <div className="flex h-full flex-col gap-4 px-8 pt-5 pb-6">
+    <div className="flex h-full flex-col gap-4 px-4 pt-5 pb-6 lg:px-8">
       <header className="flex items-center gap-4">
         <h1 className="text-4xl font-black tracking-tight">Lists</h1>
         <div className="no-scrollbar flex flex-1 gap-2 overflow-x-auto">

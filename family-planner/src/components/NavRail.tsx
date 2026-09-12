@@ -41,7 +41,7 @@ export function NavRail({ current, onNavigate, rewardsEnabled }: NavRailProps) {
   const top = rewardsEnabled ? [...PRIMARY, REWARDS] : PRIMARY
 
   return (
-    <nav className="pb-safe pl-safe pt-safe flex w-28 shrink-0 flex-col items-center gap-2 border-r border-line bg-surface py-5">
+    <nav className="pb-safe pl-safe pt-safe flex w-20 shrink-0 flex-col items-center gap-2 border-r border-line bg-surface py-5 lg:w-28">
       <div className="flex flex-1 flex-col items-center gap-2">
         {top.map((entry) => (
           <NavButton
@@ -80,7 +80,7 @@ function NavButton({
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'pressable flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-3xl transition',
+        'pressable flex h-[4.5rem] w-[4.5rem] flex-col items-center justify-center gap-1 rounded-3xl transition lg:h-20 lg:w-20',
         active ? 'bg-accent-soft text-accent' : 'text-muted',
       )}
     >

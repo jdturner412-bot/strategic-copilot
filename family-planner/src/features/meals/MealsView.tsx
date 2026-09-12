@@ -46,7 +46,7 @@ export function MealsView() {
   }
 
   return (
-    <div className="flex h-full flex-col gap-4 px-8 pt-5 pb-6">
+    <div className="flex h-full flex-col gap-4 px-4 pt-5 pb-6 lg:px-8">
       <header className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <IconButton label="Previous week" onClick={() => setWeekOffset((week) => week - 1)}>
@@ -68,32 +68,34 @@ export function MealsView() {
         </Button>
       </header>
 
-      <div className="card grid min-h-0 flex-1 grid-cols-[8.5rem_repeat(7,minmax(0,1fr))] grid-rows-[auto_repeat(3,minmax(0,1fr))] overflow-hidden">
-        <div className="border-b border-line" />
-        {days.map((day) => (
-          <div
-            key={day.toISOString()}
-            className={cn(
-              'border-b border-l border-line px-2 py-2 text-center',
-              isToday(day) && 'bg-accent-soft',
-            )}
-          >
-            <div className="text-sm font-bold tracking-wide text-muted uppercase">
-              {WEEKDAY_LABELS[day.getDay()]}
+      <div className="card no-scrollbar min-h-0 flex-1 overflow-x-auto">
+        <div className="grid h-full min-w-[52rem] grid-cols-[8.5rem_repeat(7,minmax(0,1fr))] grid-rows-[auto_repeat(3,minmax(0,1fr))]">
+          <div className="border-b border-line" />
+          {days.map((day) => (
+            <div
+              key={day.toISOString()}
+              className={cn(
+                'border-b border-l border-line px-2 py-2 text-center',
+                isToday(day) && 'bg-accent-soft',
+              )}
+            >
+              <div className="text-sm font-bold tracking-wide text-muted uppercase">
+                {WEEKDAY_LABELS[day.getDay()]}
+              </div>
+              <div className="text-2xl font-black">{day.getDate()}</div>
             </div>
-            <div className="text-2xl font-black">{day.getDate()}</div>
-          </div>
-        ))}
+          ))}
 
-        {MEAL_TYPES.map((meal) => (
-          <MealRow
-            key={meal.id}
-            meal={meal}
-            days={days}
-            labelFor={labelFor}
-            onPick={(date) => setTarget({ date, mealType: meal.id })}
-          />
-        ))}
+          {MEAL_TYPES.map((meal) => (
+            <MealRow
+              key={meal.id}
+              meal={meal}
+              days={days}
+              labelFor={labelFor}
+              onPick={(date) => setTarget({ date, mealType: meal.id })}
+            />
+          ))}
+        </div>
       </div>
 
       <SlotEditor

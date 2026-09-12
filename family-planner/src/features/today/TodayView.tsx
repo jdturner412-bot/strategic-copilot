@@ -62,17 +62,17 @@ export function TodayView({ onNavigate }: { onNavigate: (view: ViewId) => void }
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-end gap-6 px-8 pt-7 pb-5">
+      <header className="flex flex-wrap items-end gap-x-6 gap-y-3 px-4 pt-7 pb-5 lg:px-8">
         <div className="min-w-0 flex-1">
-          <p className="text-2xl font-semibold text-muted">
+          <p className="text-xl font-semibold text-muted lg:text-2xl">
             {greeting(now)}, {settings.householdName}
           </p>
-          <h1 className="mt-1 truncate text-5xl font-black tracking-tight">
+          <h1 className="mt-1 text-3xl font-black tracking-tight text-balance sm:text-4xl lg:text-5xl">
             {WEEKDAY_LABELS_LONG[now.getDay()]}, {MONTH_LABELS[now.getMonth()]} {now.getDate()}
           </h1>
         </div>
         <div className="text-right">
-          <p className="text-5xl font-black tabular-nums">{formatTime(now).split(' ')[0]}</p>
+          <p className="text-4xl font-black tabular-nums lg:text-5xl">{formatTime(now).split(' ')[0]}</p>
           <p className="text-xl font-bold text-muted">{formatTime(now).split(' ')[1]}</p>
         </div>
         <Button
@@ -85,11 +85,11 @@ export function TodayView({ onNavigate }: { onNavigate: (view: ViewId) => void }
         </Button>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-[1fr_23rem] gap-6 px-8 pb-8">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 overflow-y-auto px-4 pb-8 lg:grid-cols-[1fr_23rem] lg:overflow-hidden lg:px-8">
         {/* Schedule: one lane per family member, plus a lane for shared events.
             Lanes stack vertically so a household of six still fits on one
             screen — columns would force horizontal scrolling past member three. */}
-        <section className="no-scrollbar flex min-h-0 flex-col gap-3 overflow-y-auto">
+        <section className="no-scrollbar flex flex-col gap-3 lg:min-h-0 lg:overflow-y-auto">
           {members.length === 0 ? (
             <div className="card flex flex-1 flex-col items-center justify-center gap-4 p-10 text-center">
               <p className="text-2xl font-bold">No family members yet</p>
@@ -139,8 +139,8 @@ export function TodayView({ onNavigate }: { onNavigate: (view: ViewId) => void }
         </section>
 
         {/* Side panel: today's chores and today's meals. */}
-        <aside className="flex min-h-0 flex-col gap-6">
-          <section className="card flex min-h-0 flex-1 flex-col p-5">
+        <aside className="flex flex-col gap-6 lg:min-h-0">
+          <section className="card flex flex-col p-5 lg:min-h-0 lg:flex-1">
             <button
               type="button"
               onClick={() => onNavigate('chores')}
@@ -151,7 +151,7 @@ export function TodayView({ onNavigate }: { onNavigate: (view: ViewId) => void }
                 {openCount === 0 ? 'All done 🎉' : `${openCount} left`}
               </span>
             </button>
-            <div className="no-scrollbar flex-1 space-y-2 overflow-y-auto">
+            <div className="no-scrollbar space-y-2 lg:flex-1 lg:overflow-y-auto">
               {dueToday.length === 0 ? (
                 <p className="py-6 text-lg text-muted">Nothing on the list today.</p>
               ) : (
@@ -225,7 +225,7 @@ function MemberLane({
       className="card flex min-h-[7rem] shrink-0 items-stretch overflow-hidden"
       style={{ borderLeft: `6px solid ${accent}` }}
     >
-      <div className="flex w-52 shrink-0 flex-col justify-center gap-1 px-4 py-3">
+      <div className="flex w-36 shrink-0 flex-col justify-center gap-1 px-3 py-3 lg:w-52 lg:px-4">
         <div className="flex items-center gap-3">
           {avatar}
           <span className="min-w-0 truncate text-xl font-bold">{name}</span>

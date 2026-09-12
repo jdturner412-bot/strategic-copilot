@@ -47,7 +47,7 @@ export function RewardsView() {
     .slice(0, 12)
 
   return (
-    <div className="flex h-full flex-col gap-5 px-8 pt-5 pb-6">
+    <div className="flex h-full flex-col gap-5 px-4 pt-5 pb-6 lg:px-8">
       <header className="flex items-center gap-4">
         <h1 className="flex items-center gap-3 text-4xl font-black tracking-tight">
           <TrophyIcon className="h-10 w-10 text-amber-400" />
@@ -70,7 +70,7 @@ export function RewardsView() {
         </div>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-[1fr_24rem] gap-6">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-[1fr_24rem]">
         <section className="card no-scrollbar min-h-0 space-y-3 overflow-y-auto p-6">
           {board.length === 0 ? (
             <p className="py-12 text-center text-xl text-muted">
