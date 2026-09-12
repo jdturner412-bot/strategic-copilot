@@ -14,8 +14,8 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/apple-touch-icon.png', 'icons/favicon.svg'],
       workbox: {
+        // Covers the icons and favicon in public/ as well as the built assets.
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
         // The planner is offline-first; never fall back to the network for navigations.
         navigateFallback: 'index.html',

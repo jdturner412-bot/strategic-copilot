@@ -57,7 +57,10 @@ export function TodoRow({ item, member, onEdit, showPoints = true, density = 'fu
 
       {showPoints && item.points > 0 && (
         <span
-          className="inline-flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-base font-bold"
+          className={cn(
+            'inline-flex shrink-0 items-center gap-1 rounded-full font-bold',
+            density === 'full' ? 'px-3 py-1 text-base' : 'px-2 py-0.5 text-sm',
+          )}
           style={{ backgroundColor: tint(member?.color, 0.18), color: readableInk(member?.color) }}
         >
           <StarIcon className="h-4 w-4" />
