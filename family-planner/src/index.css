@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+/*
+ * Theme is class-driven rather than media-driven: `App` decides light vs dark
+ * from the household's settings (including the auto-by-time-of-day mode) and
+ * toggles `.dark` on <html>.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-bg: #f4f5f9;
+  --app-surface: #ffffff;
+  --app-panel: #eceef5;
+  --app-line: #d9dce6;
+  --app-ink: #14161f;
+  --app-muted: #5d6376;
+  --app-accent: #4f46e5;
+  --app-accent-soft: rgb(79 70 229 / 0.12);
+  --app-shadow: 0 1px 2px rgb(16 20 40 / 0.06), 0 8px 24px rgb(16 20 40 / 0.06);
+}
+
+.dark {
+  --app-bg: #0b1020;
+  --app-surface: #151b2e;
+  --app-panel: #1d2540;
+  --app-line: #2c3552;
+  --app-ink: #f2f4fb;
+  --app-muted: #9aa3bd;
+  --app-accent: #818cf8;
+  --app-accent-soft: rgb(129 140 248 / 0.18);
+  --app-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+@theme inline {
+  --color-bg: var(--app-bg);
+  --color-surface: var(--app-surface);
+  --color-panel: var(--app-panel);
+  --color-line: var(--app-line);
+  --color-ink: var(--app-ink);
+  --color-muted: var(--app-muted);
+  --color-accent: var(--app-accent);
+  --color-accent-soft: var(--app-accent-soft);
+  --shadow-card: var(--app-shadow);
+}
+
+html {
+  /*
+   * A wall display is read from across the room, so the whole type scale is
+   * bumped one notch above a phone's rather than restyling every component.
+   */
+  font-size: 17px;
+  height: 100%;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--app-bg);
+  color: var(--app-ink);
+  font-family:
+    ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  /* Kiosk hygiene: no rubber-banding, no double-tap zoom, no text selection. */
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Inputs stay selectable — the no-select rule above is for chrome, not fields. */
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* iOS zooms the viewport on focus for any field under 16px. */
+input,
+textarea,
+select,
+button {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+@layer components {
+  .field {
+    @apply w-full rounded-2xl border border-line bg-panel px-4 py-3 text-lg text-ink
+      outline-none transition placeholder:text-muted focus:border-accent
+      focus:ring-2 focus:ring-accent/40;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-surface shadow-card;
+  }
+
+  /* Every tappable target clears 44px, the minimum comfortable finger size. */
+  .touch-target {
+    @apply min-h-[3rem] min-w-[3rem] select-none;
+  }
+
+  .pressable {
+    @apply transition-transform duration-100 active:scale-[0.97];
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pl-safe {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .pr-safe {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* The checkbox "pop" when a chore is completed. */
+@keyframes check-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes check-draw {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slow-pan {
+  0% { transform: scale(1.06) translate3d(-1.5%, -1%, 0); }
+  100% { transform: scale(1.18) translate3d(1.5%, 1%, 0); }
+}
+
+.animate-check-pop { animation: check-pop 320ms ease-out; }
+.animate-check-draw { stroke-dasharray: 24; animation: check-draw 260ms ease-out forwards; }
+.animate-fade-in { animation: fade-in 200ms ease-out; }
+.animate-sheet-in { animation: sheet-in 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
