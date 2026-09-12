@@ -81,21 +81,49 @@ interface CheckboxProps {
  * The completion animation is the whole point of a chore chart: the box pops,
  * the tick draws itself, and a few sparks fly out. Kids will tap it twice just
  * to watch it, which is fine — un-checking revokes the points cleanly.
+ *
+ * The tick is optimistic and the write is held back by one animation frame's
+ * worth of time, because the moment the record flips the row sorts itself into
+ * the "Done" section and unmounts mid-animation.
  */
 export function Checkbox({ checked, color, size = 'lg', onChange }: CheckboxProps) {
+  const [optimistic, setOptimistic] = useState(checked)
   const [celebrating, setCelebrating] = useState(false)
   const timer = useRef<number | undefined>(undefined)
+  const pending = useRef<(() => void) | undefined>(undefined)
 
-  useEffect(() => () => window.clearTimeout(timer.current), [])
+  // Follow the record whenever it changes underneath us (another device, an
+  // edit elsewhere, or the recurring-chore rollover).
+  useEffect(() => setOptimistic(checked), [checked])
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(timer.current)
+      // Don't lose the write if the row unmounts while the animation is running.
+      pending.current?.()
+    },
+    [],
+  )
 
   const handle = () => {
-    const next = !checked
-    if (next) {
-      setCelebrating(true)
-      window.clearTimeout(timer.current)
-      timer.current = window.setTimeout(() => setCelebrating(false), 650)
+    const next = !optimistic
+    setOptimistic(next)
+    window.clearTimeout(timer.current)
+
+    if (!next) {
+      pending.current = undefined
+      onChange(false)
+      return
     }
-    onChange(next)
+
+    setCelebrating(true)
+    pending.current = () => onChange(true)
+    timer.current = window.setTimeout(() => {
+      setCelebrating(false)
+      const write = pending.current
+      pending.current = undefined
+      write?.()
+    }, ANIMATION_MS)
   }
 
   const box = size === 'lg' ? 'h-12 w-12' : 'h-10 w-10'
@@ -104,7 +132,7 @@ export function Checkbox({ checked, color, size = 'lg', onChange }: CheckboxProp
     <button
       type="button"
       role="checkbox"
-      aria-checked={checked}
+      aria-checked={optimistic}
       onClick={handle}
       className={cn(
         'touch-target relative flex shrink-0 items-center justify-center',
@@ -119,10 +147,10 @@ export function Checkbox({ checked, color, size = 'lg', onChange }: CheckboxProp
         )}
         style={{
           borderColor: color,
-          backgroundColor: checked ? color : 'transparent',
+          backgroundColor: optimistic ? color : 'transparent',
         }}
       >
-        {checked && (
+        {optimistic && (
           <svg viewBox="0 0 24 24" className={size === 'lg' ? 'h-8 w-8' : 'h-6 w-6'} aria-hidden="true">
             <path
               d="M4.5 12.5 9.5 17.5 19.5 6.5"
@@ -135,7 +163,7 @@ export function Checkbox({ checked, color, size = 'lg', onChange }: CheckboxProp
             />
           </svg>
         )}
-        {!checked && <CheckIcon className="h-6 w-6 opacity-0" />}
+        {!optimistic && <CheckIcon className="h-6 w-6 opacity-0" />}
       </span>
 
       {celebrating && (
@@ -157,6 +185,9 @@ export function Checkbox({ checked, color, size = 'lg', onChange }: CheckboxProp
     </button>
   )
 }
+
+/** Long enough for the pop, the tick and the sparks to finish. */
+const ANIMATION_MS = 620
 
 const SPARKS = [
   { dx: '-26px', dy: '-24px' },
