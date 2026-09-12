@@ -21,20 +21,20 @@ npm run preview  # serve the production build
 ### Hosting it
 
 `.github/workflows/deploy_planner.yml` builds the app and publishes it to
-GitHub Pages on every push that touches `family-planner/`. The site lands at:
+GitHub Pages on every push that touches `family-planner/`. The site is live at:
 
-```
-https://<owner>.github.io/<repo>/
-```
+**https://jdturner412-bot.github.io/strategic-copilot/**
 
 Pages serves a project site from a subdirectory, so the workflow passes
 `BASE_PATH=/<repo>/` to the build — the service worker scope and the manifest's
 `start_url` need the real path, not a relative one. Building without that
 variable keeps everything relative, which is what `npm run preview` wants.
 
-**One-time setup:** in the repository on GitHub, go to **Settings → Pages** and
-set **Source** to **GitHub Actions**. Until that is switched, the build step
-succeeds and the deploy step fails.
+**One-time setup (already done for this repository):** under **Settings →
+Pages**, **Source** must be set to **GitHub Actions**. Until it is, the build
+step succeeds and the deploy step fails with a 404. A workflow cannot do this
+for itself — creating a Pages site needs repo-admin rights that the built-in
+token does not have.
 
 ### Serving it from a computer at home
 
