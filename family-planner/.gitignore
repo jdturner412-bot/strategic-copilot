@@ -2,4 +2,13 @@ node_modules/
 dist/
 dev-dist/
 *.local
+*.tsbuildinfo
 .DS_Store
+
+# The repository root ignores *.json to keep credentials out of git. These are
+# project manifests, not secrets, and the app cannot be installed without them.
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig.app.json
+!tsconfig.node.json
