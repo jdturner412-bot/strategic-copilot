@@ -18,19 +18,46 @@ npm run build    # production build into dist/
 npm run preview  # serve the production build
 ```
 
+### Hosting it
+
+`.github/workflows/deploy_planner.yml` builds the app and publishes it to
+GitHub Pages on every push that touches `family-planner/`. The site lands at:
+
+```
+https://<owner>.github.io/<repo>/
+```
+
+Pages serves a project site from a subdirectory, so the workflow passes
+`BASE_PATH=/<repo>/` to the build — the service worker scope and the manifest's
+`start_url` need the real path, not a relative one. Building without that
+variable keeps everything relative, which is what `npm run preview` wants.
+
+**One-time setup:** in the repository on GitHub, go to **Settings → Pages** and
+set **Source** to **GitHub Actions**. Until that is switched, the build step
+succeeds and the deploy step fails.
+
 ### Putting it on the iPad
 
-1. Serve `dist/` from any machine on the home network (`npm run preview -- --host`,
-   or copy `dist/` onto a small static host).
-2. Open the URL in Safari on the iPad.
-3. Share → **Add to Home Screen**.
-4. Launch it from the Home Screen. The manifest declares `display: standalone`,
-   so it opens full-screen with no Safari chrome — the address bar, tabs and
-   toolbar are all gone.
+1. Open the site URL in **Safari** on the iPad. (It has to be Safari — Chrome
+   and Firefox on iOS cannot install a Home Screen web app.)
+2. Tap the **Share** button — the square with the arrow, in the toolbar.
+3. Scroll down the share sheet and tap **Add to Home Screen**.
+4. Name it and tap **Add**.
+5. Launch it from the new Home Screen icon, not from Safari.
 
-For a permanent wall display, also turn off Auto-Lock in iOS Settings → Display
-& Brightness, and use Guided Access (Settings → Accessibility) to keep small
-hands inside the app.
+Launched that way the manifest's `display: standalone` takes effect and the app
+fills the screen — no address bar, no tabs, no toolbar. Opening the same URL in
+Safari itself will always show browser chrome; that is expected.
+
+Once it has loaded once, the service worker keeps it working with the Wi-Fi off.
+
+For a permanent wall display, also:
+
+- Turn off Auto-Lock in iOS **Settings → Display & Brightness → Auto-Lock →
+  Never**, so the screen stays on.
+- Turn on Guided Access in **Settings → Accessibility → Guided Access** and
+  triple-click the side button after launching, to keep small hands inside the
+  app.
 
 ## What it does
 

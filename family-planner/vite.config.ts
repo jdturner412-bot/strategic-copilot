@@ -4,8 +4,17 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+/**
+ * Assets are referenced relatively by default, which keeps `npm run preview`
+ * and a plain file server working. A host that serves the app from a
+ * subdirectory (GitHub Pages serves a project at /<repo>/) sets an absolute
+ * BASE_PATH instead, because the service worker and manifest need to know the
+ * real scope they are being served under.
+ */
+const base = process.env.BASE_PATH || './'
+
 export default defineConfig({
-  base: './',
+  base,
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
@@ -18,7 +27,7 @@ export default defineConfig({
         // Covers the icons and favicon in public/ as well as the built assets.
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
         // The planner is offline-first; never fall back to the network for navigations.
-        navigateFallback: 'index.html',
+        navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
       },
       manifest: {
@@ -29,16 +38,16 @@ export default defineConfig({
         // standalone keeps Safari chrome off the screen once added to the Home Screen.
         display: 'standalone',
         orientation: 'landscape',
-        start_url: './index.html',
-        scope: './',
+        start_url: base,
+        scope: base,
         background_color: '#0b1020',
         theme_color: '#0b1020',
         categories: ['productivity', 'lifestyle'],
         icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: `${base}icons/icon-192.png`, sizes: '192x192', type: 'image/png' },
+          { src: `${base}icons/icon-512.png`, sizes: '512x512', type: 'image/png' },
           {
-            src: 'icons/maskable-512.png',
+            src: `${base}icons/maskable-512.png`,
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',

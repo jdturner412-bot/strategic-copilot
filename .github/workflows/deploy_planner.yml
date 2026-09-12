@@ -1,0 +1,71 @@
+name: Deploy Family Planner
+
+on:
+  push:
+    branches:
+      - main
+      - claude/family-planner-app-kli5ql
+    # The job-search pipeline shares this repo; don't rebuild the site for it.
+    paths:
+      - 'family-planner/**'
+      - '.github/workflows/deploy_planner.yml'
+  workflow_dispatch:
+
+# Allow the workflow to publish to Pages via OIDC, nothing more.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; a queued one supersedes the one waiting.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: family-planner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: family-planner/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        # Pages serves a project site from /<repo>/, and the service worker and
+        # manifest need that real path rather than a relative one.
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: family-planner/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
