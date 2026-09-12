@@ -47,11 +47,14 @@ export function EventPill({
       <button
         type="button"
         onClick={onClick}
-        className={cn('flex w-full items-center gap-1.5 truncate rounded-lg px-1.5 py-0.5 text-left', className)}
+        className={cn(
+          'flex w-full items-center gap-1.5 truncate rounded-md px-1.5 py-px text-left leading-[1.2]',
+          className,
+        )}
         style={{ backgroundColor: occurrenceTint(occurrence, members, 0.16) }}
       >
         <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
-        <span className="truncate text-sm font-semibold">
+        <span className="truncate text-[0.8rem] font-semibold">
           {!event.allDay && <span className="text-muted">{formatTime(start)} </span>}
           {event.title}
         </span>
