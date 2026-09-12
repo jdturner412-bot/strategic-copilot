@@ -62,27 +62,38 @@ export function TodayView({ onNavigate }: { onNavigate: (view: ViewId) => void }
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-wrap items-end gap-x-6 gap-y-3 px-4 pt-7 pb-5 lg:px-8">
-        <div className="min-w-0 flex-1">
+      {/* Below the kiosk breakpoint the date takes its own line and the clock
+          and button share the next one. Letting all three compete for one row
+          makes the date wrap into a narrow column and collide with the clock. */}
+      <header className="flex flex-wrap items-end gap-x-6 gap-y-4 px-4 pt-6 pb-5 lg:flex-nowrap lg:px-8">
+        <div className="w-full min-w-0 lg:w-auto lg:flex-1">
           <p className="text-xl font-semibold text-muted lg:text-2xl">
             {greeting(now)}, {settings.householdName}
           </p>
-          <h1 className="mt-1 text-3xl font-black tracking-tight text-balance sm:text-4xl lg:text-5xl">
+          <h1 className="mt-1 text-4xl font-black tracking-tight lg:text-5xl">
             {WEEKDAY_LABELS_LONG[now.getDay()]}, {MONTH_LABELS[now.getMonth()]} {now.getDate()}
           </h1>
         </div>
-        <div className="text-right">
-          <p className="text-4xl font-black tabular-nums lg:text-5xl">{formatTime(now).split(' ')[0]}</p>
-          <p className="text-xl font-bold text-muted">{formatTime(now).split(' ')[1]}</p>
+
+        <div className="flex flex-1 items-end gap-5 lg:flex-none">
+          <div>
+            <p className="text-4xl font-black tabular-nums lg:text-5xl">
+              {formatTime(now).split(' ')[0]}
+            </p>
+            <p className="text-lg font-bold text-muted lg:text-xl">
+              {formatTime(now).split(' ')[1]}
+            </p>
+          </div>
+          <Button
+            variant="primary"
+            size="lg"
+            className="ml-auto shrink-0"
+            icon={<PlusIcon className="h-7 w-7" />}
+            onClick={() => setDraft({ defaultDate: now })}
+          >
+            Add event
+          </Button>
         </div>
-        <Button
-          variant="primary"
-          size="lg"
-          icon={<PlusIcon className="h-7 w-7" />}
-          onClick={() => setDraft({ defaultDate: now })}
-        >
-          Add event
-        </Button>
       </header>
 
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 overflow-y-auto px-4 pb-8 lg:grid-cols-[1fr_23rem] lg:overflow-hidden lg:px-8">
@@ -225,10 +236,10 @@ function MemberLane({
       className="card flex min-h-[7rem] shrink-0 items-stretch overflow-hidden"
       style={{ borderLeft: `6px solid ${accent}` }}
     >
-      <div className="flex w-36 shrink-0 flex-col justify-center gap-1 px-3 py-3 lg:w-52 lg:px-4">
+      <div className="flex w-44 shrink-0 flex-col justify-center gap-1 px-3 py-3 lg:w-52 lg:px-4">
         <div className="flex items-center gap-3">
           {avatar}
-          <span className="min-w-0 truncate text-xl font-bold">{name}</span>
+          <span className="min-w-0 truncate text-lg font-bold lg:text-xl">{name}</span>
         </div>
         <span className="text-sm font-semibold text-muted">
           {occurrences.length === 0
