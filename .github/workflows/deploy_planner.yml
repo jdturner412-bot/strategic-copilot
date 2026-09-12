@@ -40,15 +40,6 @@ jobs:
           cache: npm
           cache-dependency-path: family-planner/package-lock.json
 
-      # Creates the Pages site via the API when the repository does not have one
-      # yet, so enabling Pages never has to be done by hand in Settings. Also
-      # reports the path the site will be served from.
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
       - name: Install dependencies
         run: npm ci
 
@@ -57,11 +48,15 @@ jobs:
 
       - name: Build
         # Pages serves a project site from /<repo>/, and the service worker and
-        # manifest need that real path rather than a relative one. The trailing
-        # slash matters: base_path comes back without one, and a user or
-        # organisation site reports an empty path, which must build as "/".
+        # manifest need that real path rather than a relative one.
+        #
+        # actions/configure-pages could report this path and create the Pages
+        # site on the fly, but creating one needs repo-admin rights that a
+        # workflow token does not have ("Resource not accessible by
+        # integration"), so Pages has to be enabled once by hand and the path
+        # is derived from the repository name instead.
         env:
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+          BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
 
       - name: Upload site
